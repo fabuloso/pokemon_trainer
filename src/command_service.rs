@@ -1,6 +1,9 @@
-use crate::command::{
-    CapturePokemonCommandHandler, Command, CommandHandler, CommandResult, CommandType,
-};
+use std::collections::HashMap;
+use std::convert::TryFrom;
+
+use crate::command::Command;
+use crate::command::CommandHandler;
+use crate::command::CommandResult;
 use serde::Deserialize;
 pub struct CommandService {}
 
@@ -10,13 +13,12 @@ impl CommandService {
     }
 
     pub fn execute(&self, payload: Payload) -> CommandResult {
-        let handler = CapturePokemonCommandHandler {};
-        handler.handle(Command {
-            command_type: CommandType::from(payload.command),
-        })
+        let handler = CommandHandler {};
+        handler.handle(Command::try_from(&payload).unwrap())
     }
 }
 #[derive(Deserialize)]
 pub struct Payload {
-    command: String,
+    pub command: String,
+    pub data: HashMap<String, String>,
 }
