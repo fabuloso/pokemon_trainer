@@ -1,4 +1,3 @@
-mod capture_pokemon;
 mod command;
 
 pub use command::CapturePokemon;

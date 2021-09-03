@@ -12,6 +12,7 @@ impl CommandHandler {
         }
     }
 }
+
 pub struct CommandResult {
     pub message: String,
 }
