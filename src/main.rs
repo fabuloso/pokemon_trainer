@@ -1,5 +1,6 @@
 mod command;
 mod command_service;
+mod pokemons;
 
 use command_service::CommandService;
 use rouille::{input::json_input, router, try_or_400};
@@ -12,7 +13,7 @@ fn main() {
         (POST)(/pokemons) => {
             let data : Payload = try_or_400!(json_input(request));
             let command_result = command_service.execute(data);
-            rouille::Response::text(command_result.message)
+            rouille::Response::json(&command_result)
         },
         _ => {
             rouille::Response::empty_400()

@@ -5,17 +5,24 @@ use crate::command::CapturePokemon;
 use crate::command::Command;
 use crate::command::CommandHandler;
 use crate::command::CommandResult;
+use crate::command::LevelUp;
+use crate::pokemons::Pokemons;
 use serde::Deserialize;
-pub struct CommandService {}
+pub struct CommandService {
+    handler: CommandHandler,
+}
 
 impl CommandService {
     pub fn new() -> Self {
-        Self {}
+        Self {
+            handler: CommandHandler {
+                pokemons: Pokemons::new(),
+            },
+        }
     }
 
     pub fn execute(&self, payload: Payload) -> CommandResult {
-        let handler = CommandHandler {};
-        handler.handle(Command::try_from(&payload).unwrap())
+        self.handler.handle(Command::try_from(&payload).unwrap())
     }
 }
 #[derive(Deserialize)]
@@ -33,7 +40,9 @@ impl TryFrom<&Payload> for Command {
                 name: value.data["name"].clone(),
                 number: value.data["number"].parse::<u16>().unwrap(),
             }),
-            "expUp" => Command::GainExperience(),
+            "expUp" => Command::GainExperience(LevelUp {
+                id: value.data["id"].parse::<u32>().unwrap(),
+            }),
             _ => unimplemented!(),
         };
         Ok(command)
