@@ -8,6 +8,7 @@ use crate::command::CommandResult;
 use crate::command::LevelUp;
 use crate::pokemons::Pokemons;
 use serde::Deserialize;
+
 pub struct CommandService {
     handler: CommandHandler,
 }
@@ -21,10 +22,11 @@ impl CommandService {
         }
     }
 
-    pub fn execute(&self, payload: Payload) -> CommandResult {
+    pub fn execute(&mut self, payload: Payload) -> CommandResult {
         self.handler.handle(Command::try_from(&payload).unwrap())
     }
 }
+
 #[derive(Deserialize)]
 pub struct Payload {
     pub command: String,

@@ -1,8 +1,8 @@
-pub struct Pokemons {
+pub struct Pokemons<'a> {
     pub pokemons: Vec<Pokemon>,
 }
 
-impl Pokemons {
+impl<'a> Pokemons<'a> {
     pub fn new() -> Self {
         Self { pokemons: vec![] }
     }
