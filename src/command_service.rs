@@ -15,6 +15,7 @@ pub struct CommandService {
 
 impl CommandService {
     pub fn new() -> Self {
+        println!("Creo un nuovo Command Service");
         Self {
             handler: CommandHandler {
                 pokemons: Pokemons::new(),

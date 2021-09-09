@@ -2,11 +2,11 @@ use serde::Serialize;
 
 use crate::pokemons::{Pokemon, Pokemons};
 
-pub struct CommandHandler<'a> {
-    pub pokemons: Pokemons<'a>,
+pub struct CommandHandler {
+    pub pokemons: Pokemons,
 }
 
-impl<'a> CommandHandler<'a> {
+impl CommandHandler {
     pub fn handle(&mut self, command: Command) -> CommandResult {
         match command {
             Command::CatchPokemon(cmd) => {
