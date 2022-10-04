@@ -17,7 +17,7 @@ fn main() {
             let command_result = command_service.lock().unwrap().execute(data);
             rouille::Response::json(&command_result)
         },
-        (GET) (/pokemons/{id : u32}) => {
+        (GET) (/pokemons/{_id : u32}) => {
             rouille::Response::text("ciao")
         },
         _ => {

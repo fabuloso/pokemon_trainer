@@ -11,8 +11,16 @@ impl Pokemons {
         self.pokemons.push(pokemon);
         self.pokemons.len() as u32
     }
+
+    pub fn by_name(&self, name: String) -> Option<Pokemon> {
+        self.pokemons
+            .iter()
+            .find(|&pokemon| name == pokemon.name)
+            .cloned()
+    }
 }
 
+#[derive(Clone)]
 pub struct Pokemon {
     pub name: String,
     pub number: u16,
