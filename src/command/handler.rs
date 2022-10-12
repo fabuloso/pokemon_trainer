@@ -15,12 +15,10 @@ impl CommandHandler {
                     message: "You already catch this kind of pokemon".into(),
                 },
                 None => {
-                    let id = self
-                        .pokemons
-                        .add(Pokemon::new(cmd.name.clone(), cmd.number));
-
+                    let pokemon = Pokemon::new(cmd.name.clone(), cmd.number);
+                    self.pokemons.save(pokemon);
                     CommandResult {
-                        id,
+                        id: 0,
                         message: format!("{} {}", cmd.name, cmd.number),
                     }
                 }

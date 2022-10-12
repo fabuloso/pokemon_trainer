@@ -1,7 +1,3 @@
-mod command;
-mod command_service;
-mod pokemons;
-
 use std::sync::{Arc, Mutex};
 
 use command_service::CommandService;
@@ -14,7 +10,9 @@ fn main() {
         router!(request,
         (POST) (/pokemons) => {
             let data : Payload = try_or_400!(json_input(request));
+
             let command_result = command_service.lock().unwrap().execute(data);
+
             rouille::Response::json(&command_result)
         },
         (GET) (/pokemons/{_id : u32}) => {
