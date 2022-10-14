@@ -5,7 +5,7 @@ use crate::pokemons::Event;
 
 #[async_trait]
 pub trait EventBus {
-    async fn publish(&self, event: Box<Event>);
+    fn publish(&self, event: Box<Event>);
 }
 
 pub struct KafkaEventBus {
@@ -16,7 +16,7 @@ impl KafkaEventBus {}
 
 #[async_trait]
 impl EventBus for KafkaEventBus {
-    async fn publish(&self, event: Box<Event>) {
+    fn publish(&self, _event: Box<Event>) {
         let payload = "".to_string();
         let event = "".to_string();
         let record = BaseRecord::to("event_bus").payload(&payload).key(&event);

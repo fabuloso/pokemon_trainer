@@ -22,11 +22,6 @@ impl Pokemons {
         }
     }
 
-    pub fn add(&mut self, pokemon: Pokemon) -> u32 {
-        self.pokemons.push(pokemon);
-        self.pokemons.len() as u32
-    }
-
     pub fn by_name(&self, name: String) -> Option<Pokemon> {
         self.pokemons
             .iter()
@@ -57,7 +52,7 @@ impl Pokemon {
 }
 
 impl Pokemon {
-    fn apply(self, event: Box<Event>) {}
+    fn apply(self, _event: Box<Event>) {}
 
     pub fn new(name: String, number: u16) -> Self {
         Self {
