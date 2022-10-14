@@ -1,5 +1,6 @@
+use rdkafka::{producer::BaseProducer, ClientConfig};
+
 use crate::{event_bus::KafkaEventBus, EventBus};
-use std::sync::Arc;
 
 pub struct Pokemons {
     pub pokemons: Vec<Pokemon>,
@@ -8,9 +9,16 @@ pub struct Pokemons {
 
 impl Pokemons {
     pub fn new() -> Self {
+        let producer: BaseProducer = ClientConfig::new()
+            .set("bootstrap.servers", "kafka")
+            .set("message.timeout.ms", "5000")
+            .create()
+            .expect("Producer creation error");
         Self {
             pokemons: vec![],
-            event_bus: KafkaEventBus { publisher: todo!() },
+            event_bus: KafkaEventBus {
+                publisher: producer,
+            },
         }
     }
 
@@ -26,9 +34,9 @@ impl Pokemons {
             .cloned()
     }
 
-    pub async fn save(&self, pokemon: Pokemon) {
+    pub fn save(&self, pokemon: Pokemon) {
         for event in pokemon.events() {
-            self.event_bus.publish(event).await
+            self.event_bus.publish(event);
         }
     }
 }

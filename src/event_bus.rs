@@ -1,7 +1,5 @@
-use std::time::Duration;
-
 use async_trait::async_trait;
-use rdkafka::producer::{FutureProducer, FutureRecord};
+use rdkafka::producer::{BaseProducer, BaseRecord};
 
 use crate::pokemons::Event;
 
@@ -11,7 +9,7 @@ pub trait EventBus {
 }
 
 pub struct KafkaEventBus {
-    publisher: FutureProducer,
+    pub publisher: BaseProducer,
 }
 
 impl KafkaEventBus {}
@@ -21,7 +19,7 @@ impl EventBus for KafkaEventBus {
     async fn publish(&self, event: Box<Event>) {
         let payload = "".to_string();
         let event = "".to_string();
-        let record = FutureRecord::to("event_bus").payload(&payload).key(&event);
-        let _ = self.publisher.send(record, Duration::from_secs(1)).await;
+        let record = BaseRecord::to("event_bus").payload(&payload).key(&event);
+        let _ = self.publisher.send(record);
     }
 }

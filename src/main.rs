@@ -1,9 +1,8 @@
 use std::sync::{Arc, Mutex};
 
-use command_service::CommandService;
+use pokemon_trainer::{CommandService, Payload};
 use rouille::{input::json_input, router, try_or_400};
 
-use crate::command_service::Payload;
 fn main() {
     let command_service = Arc::new(Mutex::new(CommandService::new()));
     rouille::start_server("localhost:4567", move |request| {
